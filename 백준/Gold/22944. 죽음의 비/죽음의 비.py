@@ -41,7 +41,7 @@ for i in range(N):
 shortest_distance = calc_distance(start_y, start_x, end_y, end_x)
 K = len(umbrella_position)
 visited = [False] * K
-max_cnt = min_cnt = N * N * K + 10000000
+max_cnt = min_cnt = N * N * K
 umbrella_position.sort()
 if shortest_distance >= H:
     change_min_cnt(start_y, start_x, H, 0, 0)
