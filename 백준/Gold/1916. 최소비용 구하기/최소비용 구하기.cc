@@ -1,64 +1,56 @@
 #include <iostream>
 #include <queue>
-#define INF 10e9
-
+#include <vector>
+#define MAX 1001
+#define BMAX 100001
+#define INF 987654321
 using namespace std;
 
-int N, M;
-vector<pair<int, int>> nodes[1001];
-int S, E;
-int dist[1001];
+int n, m;
+vector<pair<int, int>> Bus[MAX];
+int start, destination;
+int dist[MAX];
 
-void input()
-{
-	cin >> N >> M;
-
-	for (int i = 0; i < M; i++)
-	{
-		int a, b, c;
-		cin >> a >> b >> c;
-		nodes[a].push_back({ b,c });
-	}
-	for (int i = 1; i <= N; i++)
-	{
-		dist[i] = INF;
-	}
-	cin >> S >> E;
+void Input(){
+    cin>>n>>m;
+    for(int i=0; i<m; i++){
+        int a,b,c;
+        cin>>a>>b>>c;
+        Bus[a].push_back(make_pair(b,c));
+    }
+    cin>>start>>destination;
+    for(int i=1; i<=n; i++){
+        dist[i]=INF;
+    }
 }
 
-void Dijkstra()
-{
-	priority_queue<pair<int, int>> pq;
-
-	pq.push({ 0, S });
-	dist[S] = 0;
-	while (!pq.empty())
-	{
-		int cost = -pq.top().first;
-		int current = pq.top().second;
-		pq.pop();
-
-		if (dist[current] < cost) continue;
-
-		for (pair<int, int> node : nodes[current])
-		{
-			int next = node.first;
-			int next_cost = node.second;
-
-			if (dist[next] > cost + next_cost)
-			{
-				dist[next] = cost + next_cost;
-				pq.push({ -dist[next], next });
-			}
-		}
-	}
-
+void Dijkstra(){
+    priority_queue<pair<int, int>> pq;
+    pq.push(make_pair(0, start));
+    dist[start]=0;
+    while(!pq.empty()){
+        int cost=-pq.top().first;
+        int cur=pq.top().second;
+        pq.pop();
+        if(dist[cur]<cost)
+            continue;
+        for(int i=0; i<Bus[cur].size(); i++){
+            int next=Bus[cur][i].first;
+            int ncost=cost+Bus[cur][i].second;
+            if(dist[next]>ncost){
+                dist[next]=ncost;
+                pq.push(make_pair(-ncost, next));
+            }
+        }
+    }
+    cout<<dist[destination]<<endl;
 }
 
-int main()
-{
-	input();
-	Dijkstra();
-	cout << dist[E] << endl;
-	return 0;
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+    Input();
+    Dijkstra();
+    return 0;
 }
