@@ -6,8 +6,8 @@
 using namespace std;
 
 int N, M;
-vector<int> A;
-vector<int> B;
+int A = 1001;
+int B = 1001;
 
 void input()
 {
@@ -16,24 +16,14 @@ void input()
     {
         int a, b;
         cin >> a >> b;
-        A.push_back(a);
-        B.push_back(b);
+        A = min(a, A);
+        B = min(b, B);
     }
-    sort(A.begin(), A.end());
-    sort(B.begin(), B.end());
 }
 
 void solution()
 {
-    int a = A[0];
-    int b = B[0];
-    int num1 = a * ceil(double(N) / 6);
-    int num2 = b * N;
-    int num3 = a * floor(N / 6) + b * (N % 6);
-    int ans = min(num1, num2);
-    ans = min(ans, num3);
-
-    cout << ans << endl;
+    cout << min(A * (N/6 + 1), min(N/6 * A + N%6 * B , B * N))<< endl;
 }
 
 
