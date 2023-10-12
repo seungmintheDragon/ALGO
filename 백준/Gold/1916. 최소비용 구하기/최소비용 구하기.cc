@@ -28,13 +28,13 @@ void input()
 
 void Dijkstra()
 {
-	priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+	priority_queue<pair<int, int>> pq;
 
 	pq.push({ 0, S });
 	dist[S] = 0;
 	while (!pq.empty())
 	{
-		int cost = pq.top().first;
+		int cost = -pq.top().first;
 		int current = pq.top().second;
 		pq.pop();
 
@@ -48,7 +48,7 @@ void Dijkstra()
 			if (dist[next] > cost + next_cost)
 			{
 				dist[next] = cost + next_cost;
-				pq.push({ dist[next], next });
+				pq.push({ -dist[next], next });
 			}
 		}
 	}
