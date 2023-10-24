@@ -10,6 +10,7 @@ vector<pair<int, int>> v;
 priority_queue<int, vector<int>, greater<int>> pq;
  
 int main() {
+    ios::sync_with_stdio(false); cin.tie(0); cout.tie(0);
     cin >> N;
     for (int i = 0; i < N; i++) {
         int start, end;
@@ -29,6 +30,6 @@ int main() {
             pq.push(v[i].second);
         }
     }
-    cout << pq.size();
+    cout << pq.size() << "\n";
     return 0;
 }
