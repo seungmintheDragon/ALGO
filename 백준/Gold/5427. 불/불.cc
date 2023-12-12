@@ -1,12 +1,11 @@
+#include <iostream>
+#include <queue>
 #define MAX 1000 + 1
 #define X second
 #define Y first
-#include <iostream>
-#include <queue>
-
 using namespace std;
 
-// 상하좌우
+
 int dx[4] = { 0, 0,-1, 1 };
 int dy[4] = { 1, -1, 0, 0 };
 
