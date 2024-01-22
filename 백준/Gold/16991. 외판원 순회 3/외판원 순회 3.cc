@@ -16,7 +16,7 @@ double DFS(int cur, int visit) {
     if (visit == (1 << n) - 1) {
         return GetDis(cur, 0);
     }
-
+/*
     if (dp[cur][visit] != 0) return dp[cur][visit];
 
     dp[cur][visit] = INF;
@@ -26,6 +26,16 @@ double DFS(int cur, int visit) {
         dp[cur][visit] = min(dp[cur][visit], GetDis(cur, i) + DFS(i, visit | 1 << i));
     }
     return dp[cur][visit];
+*/
+  
+    double& ret = dp[cur][visit];
+    if (ret != 0) return ret;
+    ret = INF;
+    for(int i = 0; i < n; i ++) {
+        if(visit & 1 << i) continue;
+        ret = min(ret, GetDis(cur, i) + DFS(i, visit | 1 << i));
+    }
+    return ret;
 }
 
 int main() {
@@ -37,7 +47,8 @@ int main() {
         }
     }
     memset(dp, 0, sizeof(dp));
-    cout << fixed;
+    cout << fixed; // 소수점 6자리 출력을 위한 설정
+    cout.precision(6); //fixed는 기본이 소수점 6자리라 설정안해줘도됨
     cout << DFS(0, 1) << endl;
     return 0;
 }
