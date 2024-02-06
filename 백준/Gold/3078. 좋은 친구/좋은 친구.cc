@@ -5,8 +5,8 @@ using namespace std;
 
 int n,k;
 long long ans;
-int names[666666];
-int cnt[22];
+int names[600001];
+int cnt[20];
 
 void input() {
     string s;
