@@ -18,7 +18,7 @@ int Cal (int a, int b, char c){
 	return a;
 }
 
-void Dfs(int cur, int sums, bool bef) {
+void Dfs(int cur, int sums) {
 	if (cur > n) {
 		ans = max(sums, ans);
 		//cout << sums << "\n";
@@ -27,11 +27,11 @@ void Dfs(int cur, int sums, bool bef) {
 
 	// 괄호 안치고
 
-	Dfs(cur + 2, Cal(sums, s[cur + 1] - '0', s[cur]), true);
+	Dfs(cur + 2, Cal(sums, s[cur + 1] - '0', s[cur]));
 	// 괄호 치고
 	if (cur <= n - 2)
 	{
-		Dfs(cur + 4, Cal(sums, Cal(s[cur + 1] - '0', s[cur + 3] - '0', s[cur + 2]), s[cur]), false);
+		Dfs(cur + 4, Cal(sums, Cal(s[cur + 1] - '0', s[cur + 3] - '0', s[cur + 2]), s[cur]));
 	}
 }
 
@@ -40,7 +40,7 @@ int main() {
     cin >> n >> s;
 	s = "0+" + s;
 	//cout << s;
-	Dfs(1, 0, true);
+	Dfs(1, 0);
 	cout << ans;
     return 0;
 }
