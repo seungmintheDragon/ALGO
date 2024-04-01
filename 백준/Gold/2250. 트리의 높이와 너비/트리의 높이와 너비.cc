@@ -1,74 +1,52 @@
-#include<iostream>
-#include<vector>
-#include<algorithm>
+#include <iostream>
+#include <vector>
 
 using namespace std;
 
-struct Node
-{
-	int left, right;
-};
+vector<bool> hasP(10003, false); //해당 노드가 부모를 갖는지 판단
+int rc[10003]; //우측 노드
+int lc[10003]; //좌측 노드
+int n, root;
+int idx = 1; //각 노드는 중위순회를 했을 때 idx번째 탐색에 방문한다
+int mxdepth;
 
-int n, ans_width, ans_level;
-int nums = 1;
-vector<Node> graph;
-int is_visited[10001];
-vector<vector<int>> arr;
+int ans, level;
+bool isAnswerRoot = true;
+int mx[10003]; //해당 level에서의 최댓값
+int mn[10003]; //해당 level에서의 최솟값
 
-
-void Input() {
-	cin >> n;
-	graph.assign(n + 1, {});
-	for (int i = 1; i <= n; i++)
-	{
-		int a, l, r;
-		cin >> a >> l >> r;
-		graph[a] = { l , r };
-		if (l != -1) is_visited[l] ++;
-		if (r != -1) is_visited[r] ++;
-	}
+void DFS(int cur, int depth) {
+    if (lc[cur]) DFS(lc[cur], depth + 1);
+    //중위순회
+    mxdepth = max(mxdepth, depth);
+    mn[depth] = min(mn[depth], idx);
+    mx[depth] = max(mx[depth], idx);
+    idx ++;
+    if (rc[cur]) DFS(rc[cur], depth + 1);
 }
-
-// 중위순회(현재 위치, 레벨{깊이})
-void InOrder(int cur, int level) {
-	if (cur == -1) return;
-
-	InOrder(graph[cur].left, level + 1);
-
-	if (arr.size() <= level) arr.resize(level + 1);
-	arr[level].emplace_back(nums++);
-
-	InOrder(graph[cur].right, level + 1);
-}
-
-void Find_ans() {
-	int temp = 0;
-	for (int i = 1; i < arr.size(); i++) {
-		sort(arr[i].begin(), arr[i].end());
-		temp = arr[i][arr[i].size() - 1] - arr[i][0] + 1;
-
-		if (temp > ans_width) {
-			ans_level = i;
-			ans_width = temp;
-		}
-	}
-}
-
 
 int main() {
-	ios::sync_with_stdio(false); cin.tie(0); cout.tie(0);
-	Input();
-	int root = 0;
-	for (int i = 1; i <= n; i++) {
-		if (is_visited[i] == 0) {
-			root = i;
-			break;
-		}
-	}
-	InOrder(root, 1);
-	Find_ans();
-
-	cout << ans_level << " " << ans_width << "\n";
-	return 0;
+    ios::sync_with_stdio(0);
+    cin.tie(0); cout.tie(0);
+    cin >> n;
+    fill(mn, mn + 10003, 0x7f7f7f7f);
+    for (int i = 0; i < n; i++) {
+        int cur, l, r; cin >> cur >> l >> r;
+        if (l != -1) { lc[cur] = l; hasP[l] = 1; }
+        if (r != -1) { rc[cur] = r; hasP[r] = 1; }
+    }
+    for (int i = 1; i <= n; i++) { if (hasP[i] == 0) { root = i; break; } }
+    DFS(root, 1);
+    for (int i = 1; i <= mxdepth; i++) {
+        if (mx[i] - mn[i] + 1 > ans) {
+            if (i >= 2) isAnswerRoot = false;
+            ans = mx[i] - mn[i] + 1;
+            level = i;
+        }
+    }
+    if (isAnswerRoot) {
+        level = 1; ans = 1;
+    }
+    cout << level << ' ' << ans;
+    return 0;
 }
-
