@@ -9,32 +9,65 @@ struct Child_Node
 	int node, depth;
 };
 
-vector<vector<Child_Node>> graph;
 int n, root;
 int tree_size, branch_size;
 int is_visited[200001];
 vector<vector<Child_Node>> arr;
 
 
-void Make_Tree(int cur) {
+void Make_branch(int cur, int level) {
 	if (is_visited[cur] == 1) return;
 	is_visited[cur] = 1;
-	//cout << arr[cur].size() << "\n";
+	int cnt = arr[cur].size();
+	for (Child_Node n : arr[cur]) {
+		cnt -= is_visited[n.node];
+	}
+
+	if (cnt == 0) {
+		branch_size = max(branch_size, level);
+		return;
+	}
 
 	for (Child_Node n : arr[cur]) {
-		//cout << n.node << "\n";
-		//cout << n.depth << "\n";
 		if (is_visited[n.node] == 1) continue;
-		graph[cur].emplace_back(n);
-		Make_Tree(n.node);
+		Make_branch(n.node, level + n.depth);
+	}
+}
+
+void Make_Tree(int cur, int level) {
+	if (is_visited[cur] == 1) return;
+	is_visited[cur] = 1;
+	int cnt = arr[cur].size();
+	for (Child_Node n : arr[cur]) {
+		cnt -= is_visited[n.node];
+	}
+
+	if (cnt == 0) {
+		tree_size = level;
+		return;
+	}
+
+	if (cnt == 1) {
+		for (Child_Node n : arr[cur]) {
+			if (is_visited[n.node] == 1) continue;
+			Make_Tree(n.node, level + n.depth);
+			return;
+		}
+		return;
+	}
+
+	for (Child_Node n : arr[cur]) {
+		if (is_visited[n.node] == 1) continue;
+		tree_size = level;
+		Make_branch(n.node, n.depth);
 	}
 }
 
 
 
+
 void Input() {
 	cin >> n >> root;
-	graph.assign(n + 1, {});
 	arr.assign(n + 1, {});
 	int a, b, d;
 	Child_Node temp_node;
@@ -43,49 +76,20 @@ void Input() {
 		cin >> a >> b >> d;
 		temp_node.node = a;
 		temp_node.depth = d;
-		//cout << temp_node.node;
 		arr[b].emplace_back(temp_node);
 		temp_node.node = b;
-		//cout << temp_node.node;
 		arr[a].emplace_back(temp_node);
 
 	}
-	Make_Tree(root);
+	Make_Tree(root, 0);
 }
 
-
-void DFS_Branch(int cur, int bracn_level) {
-	if (graph[cur].size() == 0) {
-		branch_size = max(bracn_level, branch_size);
-		return;
-	}
-	for (Child_Node next_node : graph[cur])
-	{
-		DFS_Branch(next_node.node, bracn_level + next_node.depth);
-	}
-}
-
-void DFS(int cur, int tree_level) {
-	if (graph[cur].size() == 1) 
-	{
-		DFS(graph[cur][0].node, tree_level + graph[cur][0].depth);
-		return;
-	}
-
-	tree_size = tree_level;
-	if (graph[cur].size() == 0) return;
-	for (Child_Node next_node : graph[cur])
-	{
-		DFS_Branch(next_node.node, next_node.depth);
-	}
-}
 
 
 
 int main() {
 	ios::sync_with_stdio(false); cin.tie(0); cout.tie(0);
 	Input();
-	DFS(root, 0);
 	cout << tree_size << " " << branch_size;
 	return 0;
 }

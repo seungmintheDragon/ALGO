@@ -4,7 +4,7 @@
 
 ### 성능 요약
 
-메모리: 33972 KB, 시간: 152 ms
+메모리: 19948 KB, 시간: 128 ms
 
 ### 분류
 
@@ -12,31 +12,31 @@
 
 ### 제출 일자
 
-2024년 4월 1일 21:09:35
+2024년 4월 1일 21:55:18
 
 ### 문제 설명
 
-<p style="text-align: center;"><img alt="" height="400px" src="https://upload.acmicpc.net/cb157759-0c85-4c0d-a121-771c6f25d688/-/preview/"></p>
+<p style="text-align: center;"><img alt="" height="400px" src=""></p>
 
 <p>시청 공무원 마이크로는 과장으로부터 시에 있는 나무의 기둥의 길이와 가장 긴 가지의 길이를 파악하라는 업무 지시를 받았다.</p>
 
 <p>마이크로는 ICPC Sinchon Winter Algorithm Camp에서 배운 트리 자료 구조를 이용하면 이 작업을 좀 더 수월하게 할 수 있으리라 판단했다. </p>
 
-<p style="text-align: center;"><img alt="" height="400px" src="https://upload.acmicpc.net/4f327bb2-ffff-403c-9c45-ca27b8ba384f/-/preview/"></p>
+<p style="text-align: center;"><img alt="" height="400px" src=""></p>
 
 <p>마이크로는 트리의 기둥과 가지를 분류하기 위해 기가 노드를 추가로 정의하였다.</p>
 
 <p>기가 노드는 루트 노드에서 순회를 시작했을 때, 처음으로 자식 노드가 <mjx-container class="MathJax" jax="CHTML" style="font-size: 109%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mn class="mjx-n"><mjx-c class="mjx-c32"></mjx-c></mjx-mn></mjx-math><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn></math></mjx-assistive-mml><span aria-hidden="true" class="no-mathjax mjx-copytext">$2$</span></mjx-container>개 이상인 노드다. 기둥-가지를 줄여 기가 노드라 이름 붙였다. 위 그림에서 기가 노드는 <mjx-container class="MathJax" jax="CHTML" style="font-size: 109%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mn class="mjx-n"><mjx-c class="mjx-c34"></mjx-c></mjx-mn></mjx-math><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn></math></mjx-assistive-mml><span aria-hidden="true" class="no-mathjax mjx-copytext">$4$</span></mjx-container>번 노드다.</p>
 
-<p style="text-align: center;"><img alt="" height="400px" src="https://upload.acmicpc.net/a5e04b5d-e28b-4a9c-97ce-dd45f500b824/-/preview/"></p>
+<p style="text-align: center;"><img alt="" height="400px" src=""></p>
 
 <p>단, 위 그림과 같이 리프 노드가 단 <mjx-container class="MathJax" jax="CHTML" style="font-size: 109%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mn class="mjx-n"><mjx-c class="mjx-c31"></mjx-c></mjx-mn></mjx-math><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1</mn></math></mjx-assistive-mml><span aria-hidden="true" class="no-mathjax mjx-copytext">$1$</span></mjx-container>개인 경우 리프 노드가 동시에 기가 노드가 된다.</p>
 
-<p style="text-align: center;"><img alt="" height="400px" src="https://upload.acmicpc.net/cc15e14f-82e2-4c5c-9dbc-7919b7b96649/-/preview/"></p>
+<p style="text-align: center;"><img alt="" height="400px" src=""></p>
 
 <p>또한, 위 그림과 같이 루트 노드가 동시에 기가 노드인 경우도 가능하다.</p>
 
-<p style="text-align: center;"><img alt="" height="400px" src="https://upload.acmicpc.net/1a596e90-2416-4c7e-aa8f-f8bdf035dbaa/-/preview/"><img alt="" height="400px" src="https://upload.acmicpc.net/86b4fbd7-b49b-4c58-9e10-a06d0365f8eb/-/preview/"></p>
+<p style="text-align: center;"><img alt="" height="400px" src=""><img alt="" height="400px" src=""></p>
 
 <ul>
 	<li>트리의 기둥은 루트 노드에서부터 기가 노드까지다. 위 그림에서 기둥은 <mjx-container class="MathJax" jax="CHTML" style="font-size: 109%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mn class="mjx-n"><mjx-c class="mjx-c31"></mjx-c></mjx-mn><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c2212"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="3"><mjx-c class="mjx-c32"></mjx-c></mjx-mn><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c2212"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="3"><mjx-c class="mjx-c33"></mjx-c></mjx-mn><mjx-mo class="mjx-n" space="3"><mjx-c class="mjx-c2212"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="3"><mjx-c class="mjx-c34"></mjx-c></mjx-mn></mjx-math><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1</mn><mo>−</mo><mn>2</mn><mo>−</mo><mn>3</mn><mo>−</mo><mn>4</mn></math></mjx-assistive-mml><span aria-hidden="true" class="no-mathjax mjx-copytext">$1-2-3-4$</span></mjx-container> 이다.<br>
