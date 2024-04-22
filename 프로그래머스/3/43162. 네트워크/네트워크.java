@@ -21,7 +21,7 @@ class Solution {
     void DFS(int current, int[][] computers) {
         check[current] = true;
         for(int i =0; i < computers.length; i ++) {
-            if(i != current && !check[i] && computers[current][i] == 1 && computers[i][current] == 1) {
+            if(i != current && !check[i] && computers[current][i] == 1) {
                 DFS(i, computers);
             }
         }
