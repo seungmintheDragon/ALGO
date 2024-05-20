@@ -4,7 +4,7 @@
 #include <queue>
 #include <algorithm>
 #include <math.h>
-#pragma warning(disable:4996)
+
 
 using namespace std;
 #define INF 1234567890
