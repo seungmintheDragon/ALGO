@@ -1,13 +1,14 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#define MAX 987654321
 
 using namespace std;
 
 vector<vector<int>> v;
 vector<vector<int>> visited;
 int n;
-int answer = 987654321;
+int answer = MAX;
 int dx[4] = {0, 1, -1, 0}, dy[4] = {1, 0, 0, -1};
 
 bool in_Range(int x , int y) {
@@ -15,13 +16,10 @@ bool in_Range(int x , int y) {
 }
 
 void DFS(int x, int y, int cost, int dir , vector<vector<int>> &board) {
-    if (cost > answer) {
+    if(cost >= v[n-1][n-1]) {
         return;
     }
     
-    if(x == n - 1 && y == n - 1) {
-        return;
-    }
     
     for(int d = 0; d < 4; d ++) {
         int nx = x + dx[d];
@@ -38,7 +36,8 @@ void DFS(int x, int y, int cost, int dir , vector<vector<int>> &board) {
 
 int solution(vector<vector<int>> board) {
     n = board.size();
-    v.resize(n, vector<int>(n, 987654321));
+    v.resize(n, vector<int>(n, MAX));
+    v[0][0] = 0;
     for(int d = 0; d < 4; d ++) {
         DFS(0, 0, 0, d, board);
     }
